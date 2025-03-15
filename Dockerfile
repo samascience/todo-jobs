@@ -21,7 +21,7 @@ COPY package.json package-lock.json ./
 RUN npm install
 
 # Copy built frontend from the build stage
-COPY --from=build /app/build ./public
+COPY --from=build /app/dist ./public
 
 # Copy backend source code
 COPY . .
