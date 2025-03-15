@@ -5,7 +5,18 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 const { OAuth2Client } = require('google-auth-library');
+const secret = process.env.JWT_SECRET; // Ensure this environment variable is set
 
+if (!secret) {
+  throw new Error('JWT_SECRET environment variable is not set');
+}
+
+const jwtMiddleware = expressJwt({
+  secret: secret,
+  algorithms: ['HS256']
+});
+
+module.exports = jwtMiddleware;
 exports.requireSignin = expressJwt({
   secret: process.env.JWT_SECRET,
   algorithms: ['HS256'],
